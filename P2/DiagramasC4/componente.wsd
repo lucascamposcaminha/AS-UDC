@@ -1,0 +1,53 @@
+@startuml Diagrama Componente
+title Diagrama de componente del servidor echo
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+System_Ext(usuario, "Usuario", "Usuario que inicia el servidor echo")
+
+Boundary(servidor_echo, "Servidor echo"){
+
+    Container(start, "start", "Inicia el servidor echo"){
+
+        Component(startC, "start")
+        Component(startAux, "start_aux")
+        Rel(usuario, startC, "Inicio servidor echo", "n")
+        Rel(startC, startAux, "Envia", "Número total de mensajes")
+
+    }
+
+    Container(creation, "creation", "Crea el/los mensaje/s"){
+
+        Component(creationC, "creation")
+        Component(creationAux, "creation_aux")
+        Rel(startAux, creationC, "Envía", "Mensaje/s")
+        Rel(creationC, creationAux, "Envía", "Mensaje/s")
+
+    }
+
+    Container(action, "action", "Opera con el/los mensaje/s"){
+
+        Component(recepcion, "Recepción del mensaje")
+        Component(operacion, "Conteo del nº de caracteres del mensaje")
+        Component(envio, "Envío del nº de caracteres")
+        Rel(creationAux, recepcion, "Envía", "Mensaje/s")
+        Rel(recepcion, operacion, "Envía", "Mensaje/s")
+        Rel(operacion, envio, "Envía", "Nº caracteres mensaje")
+
+    }
+
+    Container(print, "print", "Imprime el/los mensaje/s"){
+
+        Component(recepcionM,"Recepción del mensaje")
+        Component(envioM, "Envío del mensaje")
+        Rel(envio, recepcionM, "Envío", "Mensaje a imprimir")
+        Rel(recepcionM, envioM, "Envío", "Mensaje a imprimir")
+
+    }
+
+}
+
+Rel(envioM, output, "IO.puts", "Último mensaje")
+
+SHOW_FLOATING_LEGEND()
+@enduml

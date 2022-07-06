@@ -1,0 +1,13 @@
+@startuml Diagrama Contexto
+title Diagrama de contexto del servidor echo
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Ext(usuario, "Usuario", "Usuario inicia servidor echo")
+System(server, "Servidor echo", "Servidor echo que inicia el cliente")
+
+Rel(usuario, server, "Inicio del servidor echo", "n")
+Rel(server, output, "IO.puts", "Último mensaje")
+
+SHOW_FLOATING_LEGEND()
+@enduml
