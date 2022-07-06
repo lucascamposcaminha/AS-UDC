@@ -1,0 +1,18 @@
+diff --git a/.github/workflows/elixir.yml b/.github/workflows/elixir.yml
+index f8a6673..c55a90a 100644
+--- a/.github/workflows/elixir.yml
++++ b/.github/workflows/elixir.yml
+@@ -3,6 +3,7 @@ name: Elixir CI
+ on:
+   pull_request:
+     branches: [ revisado ]
++    types: [ opened, synchronize ]
+ 
+ jobs:
+   build:
+@@ -26,4 +27,4 @@ jobs:
+     - name: Install dependencies
+       run: mix deps.get
+     - name: Run tests
+-      run: mix test
++      run: mix cmd --app ${{ github.event.pull_request.title }} mix test --color
